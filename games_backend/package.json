@@ -1,0 +1,15 @@
+{
+  "name": "games_backend",
+  "version": "1.0.0",
+  "description": "Backend for FULLSTACK 1 project",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "games_app"
+  },
+  "author": "Mario Alberto Vázquez Anaya, Brandon Daniel Salazar López",
+  "license": "ISC"
+}
