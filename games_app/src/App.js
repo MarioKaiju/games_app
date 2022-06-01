@@ -1,7 +1,8 @@
+import GamesList from "./components/GamesList";
 
 function App() {
   return (
-    null
+    <GamesList />
   );
 }
 
