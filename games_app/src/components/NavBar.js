@@ -4,13 +4,13 @@ import logo from '../images/Logo.svg'
 
 const NavBarContainer = styled.div`
   width: 90%;
-  height: 100px;
+  height: 75px;
   background-color: #1e8c14;
   padding: 0 5%;
   display: grid;
   grid-auto-rows: 50px;
   align-content: center;
-  grid-template-columns: 3fr 1fr 1fr 1fr;
+  grid-template-columns: 4fr 1fr 1fr 1fr;
   gap: 25px;
   text-align: center;
 
@@ -21,6 +21,8 @@ const NavBarContainer = styled.div`
     width: fit-content;
     place-self: center;
     padding: .5em 1em;
+    white-space: nowrap;
+    font-size: 16px;
     @media (hover: hover) and (pointer: fine) {
       :hover {
         background-color: #219c16;
