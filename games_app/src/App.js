@@ -1,24 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import GamesList from "./components/GamesList";
+import NavBar from "./components/NavBar";
+import styled from "styled-components";
+import { Route, Routes } from 'react-router-dom'
+
+const Container = styled.div`
+  margin: 50px 5%;
+`;
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <NavBar />
+      <Container>
+        <Routes>
+          <Route path="/games" element={<GamesList />} />
+        </Routes>
+      </Container>
+    </>
   );
 }
 

@@ -26,7 +26,25 @@ const gameSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Platform'
     }
-  ]
+  ],
+  reviews: [
+    {
+      comment: {
+        type: String
+      },
+      score: {
+        type: Number
+      },
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+      }
+    }
+  ],
+  score: {
+    type: mongoose.SchemaTypes.Decimal128,
+    default: 0
+  }
 })
 
 gameSchema.plugin(uniqueValidator)
