@@ -1,21 +1,17 @@
 import GamesList from "./components/GamesList";
-import NavBar from "./components/NavBar";
-import styled from "styled-components";
 import { Route, Routes } from 'react-router-dom'
+import Login from "./components/Login";
+import NavBar from "./components/NavBar";
 
-const Container = styled.div`
-  margin: 50px 5%;
-`;
 
 function App() {
   return (
     <>
-      <NavBar />
-      <Container>
-        <Routes>
-          <Route path="/games" element={<GamesList />} />
-        </Routes>
-      </Container>
+      <Routes>
+        <Route path="/" element={<NavBar />}/>
+        <Route path="/games" element={<GamesList />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
     </>
   );
 }

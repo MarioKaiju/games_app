@@ -1,5 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import styled from "styled-components";
+import NavBar from "./NavBar";
+
+const Container = styled.div`
+  margin: 50px 5%;
+`;
 
 const Platforms = ({ platforms }) => {
   return (
@@ -30,18 +36,21 @@ function GamesList() {
 
   if (games)
   return (
-    <div>
-      { games.map(({title, developer, publisher, releaseDate, platforms}, i) => (
-        <div key={i}>
-          {title}<br />
-          Desarrollador: {developer}<br />
-          Distribuidor: {publisher.name}<br />
-          Fecha de lanzamiento: {getFormattedDate(releaseDate)}<br />
-          <Platforms platforms={platforms} />
-        </div>
-      ))
-      }
-    </div>
+    <>
+      <NavBar />
+      <Container>
+        { games.map(({title, developer, publisher, releaseDate, platforms}, i) => (
+          <div key={i}>
+            {title}<br />
+            Desarrollador: {developer}<br />
+            Distribuidor: {publisher.name}<br />
+            Fecha de lanzamiento: {getFormattedDate(releaseDate)}<br />
+            <Platforms platforms={platforms} />
+          </div>
+        ))
+        }
+      </Container>
+    </>
   );
 
   return (null)
