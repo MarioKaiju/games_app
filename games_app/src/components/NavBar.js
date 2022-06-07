@@ -4,26 +4,33 @@ import logo from '../images/Logo.svg'
 
 const NavBarContainer = styled.div`
   width: 90%;
-  height: 100px;
+  height: 75px;
   background-color: #1e8c14;
   padding: 0 5%;
   display: grid;
   grid-auto-rows: 50px;
   align-content: center;
-  grid-template-columns: 3fr 1fr 1fr 1fr;
+  grid-template-columns: 4fr 1fr 1fr 1fr;
   gap: 25px;
   text-align: center;
 
-  a:not(#logo) {
+  a:not(#logo), button {
+    background-color: transparent;
+    outline: none;
+    border: none;
+    line-height: 1.5;
     align-self: center;
     text-decoration: none;
     color: #fff;
     width: fit-content;
     place-self: center;
     padding: .5em 1em;
+    white-space: nowrap;
+    font-size: 16px;
     @media (hover: hover) and (pointer: fine) {
       :hover {
         background-color: #219c16;
+        cursor: pointer;
       }
     }
   }
@@ -36,7 +43,7 @@ const NavBarContainer = styled.div`
   }
 `;
 
-const NavBar = () => {
+const NavBar = ({ user }) => {
   return (
     <NavBarContainer>
       <Link to={'/'} id="logo">
@@ -47,9 +54,15 @@ const NavBar = () => {
       <Link to={'/publishers'}>
         Distribuidores
       </Link>
-      <Link to={'/login'}>
-        Iniciar Sesión
-      </Link>
+      {
+        user ?
+          <button >{ user.username }</button>
+        :
+          <Link to={'/login'}>
+            Iniciar Sesión
+          </Link>
+      }
+      
     </NavBarContainer>
   )
 }

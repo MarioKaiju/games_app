@@ -37,12 +37,14 @@ const gameSchema = new mongoose.Schema({
       },
       user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        index: true,
+        unique: true
       }
     }
   ],
   score: {
-    type: mongoose.SchemaTypes.Decimal128,
+    type: Number,
     default: 0
   }
 })
@@ -51,7 +53,7 @@ gameSchema.plugin(uniqueValidator)
 
 gameSchema.set('toJSON', {
   transform: (document, returnedObject) => {
-    // returnedObject.id = returnedObject._id.toString()
+    returnedObject.id = returnedObject._id.toString()
     delete returnedObject._id
     delete returnedObject.__v
   }
