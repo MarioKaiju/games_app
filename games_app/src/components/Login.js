@@ -1,5 +1,6 @@
 import styled from "styled-components"
-
+import { useNavigate } from "react-router-dom"
+import axios from "axios";
 const ContenedorLogin = styled.div`
   margin: 0;
   border: none;
@@ -16,6 +17,17 @@ const ContenedorLogin = styled.div`
     font-size: 18px;
     padding: 0.5em 0;
     border-radius: 1em;
+
+    @media (hover: hover) and (pointer: fine) {
+      :hover {
+        background-color: #ddd;
+        outline: 1px #ccc solid;
+        cursor: pointer;
+      }
+    }
+  }
+
+  button #login {
     margin-top: 75px;
   }
 
@@ -31,31 +43,54 @@ const ContenedorLogin = styled.div`
     text-align: center
   }
 
-  label, input {
+  p, input {
     font-size: 18px;
   }
 
-  input {
-    background-color: #f3f3f3;
-    border: none;
-    outline: none;
-    padding: .5em .75em;
-    border-radius: 1em;
-    margin-top: 5px;
+  .no-user-container {
+    width: 300px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    margin-top: 25px;
+    gap: 5px;
 
-    :focus {
-      background-color: #ccc;
+    p {
+      font-size: 12px;
+    }
+
+    button {
+      background-color: #59e64c;
+      @media (hover: hover) and (pointer: fine) {
+        :hover {
+          background-color: #acf2a6;
+          outline: 1px solid #1e8c18;
+          cursor: pointer;
+        }
+      }
     }
   }
 `;
 
 
-const Login  = () => {
+const Login  = ({ setUser, setNotification }) => {
+  const navigate = useNavigate();
+
   const login = (e) => {
     e.preventDefault()
     const username = e.target.user.value
     const password = e.target.password.value
-    console.log("username", username, "password", password)
+    axios.post('/api/login', { username, password}).then((response) => {
+      setUser(response.data);
+      setNotification({ message: "Inicio de sesión exitoso, click aquí para ir a la pagina principal", type: "redirect", url: '/' })
+    }).catch((error) => {
+      if (error.response.status === 401) {
+        setNotification({ message: "Contraseña Incorrecta", type: "info", url: '' })
+      }
+      if (error.response.status === 404) {
+        setNotification({ message: "No se encontró el usuario", type: "error", url: '' })
+      }
+    })
   }
 
   return (
@@ -63,18 +98,21 @@ const Login  = () => {
       <ContenedorLogin>
         <form onSubmit={login}>
           <div>
-            <label htmlFor="user">Usuario</label>
+            <p>Usuario</p>
             <input id="user" placeholder="usuario" />
           </div>
           <div>
-            <label htmlFor="password" >Contraseña</label>
+            <p>Contraseña</p>
             <input id="password" placeholder="contraseña" type="password" />
           </div>
-          <button type="submit">Iniciar Sesión</ button>
+          <button id="login" type="submit">Iniciar Sesión</ button>
         </form>
+        <div className="no-user-container">
+          <p>No tienes usuario?</p>
+          <button onClick={ () => navigate('/register') }>Regístrate</ button>
+        </div>
       </ContenedorLogin>
     </div>
-    
   )
 }
 

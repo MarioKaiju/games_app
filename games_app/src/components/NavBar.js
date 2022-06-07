@@ -14,7 +14,11 @@ const NavBarContainer = styled.div`
   gap: 25px;
   text-align: center;
 
-  a:not(#logo) {
+  a:not(#logo), button {
+    background-color: transparent;
+    outline: none;
+    border: none;
+    line-height: 1.5;
     align-self: center;
     text-decoration: none;
     color: #fff;
@@ -26,6 +30,7 @@ const NavBarContainer = styled.div`
     @media (hover: hover) and (pointer: fine) {
       :hover {
         background-color: #219c16;
+        cursor: pointer;
       }
     }
   }
@@ -38,7 +43,7 @@ const NavBarContainer = styled.div`
   }
 `;
 
-const NavBar = () => {
+const NavBar = ({ user }) => {
   return (
     <NavBarContainer>
       <Link to={'/'} id="logo">
@@ -49,9 +54,15 @@ const NavBar = () => {
       <Link to={'/publishers'}>
         Distribuidores
       </Link>
-      <Link to={'/login'}>
-        Iniciar Sesión
-      </Link>
+      {
+        user ?
+          <button >{ user.username }</button>
+        :
+          <Link to={'/login'}>
+            Iniciar Sesión
+          </Link>
+      }
+      
     </NavBarContainer>
   )
 }
