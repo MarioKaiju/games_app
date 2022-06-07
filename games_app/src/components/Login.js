@@ -1,6 +1,8 @@
 import styled from "styled-components"
 import { useNavigate } from "react-router-dom"
 import axios from "axios";
+import googleLogo from '../images/google.svg'
+
 const ContenedorLogin = styled.div`
   margin: 0;
   border: none;
@@ -69,6 +71,19 @@ const ContenedorLogin = styled.div`
         }
       }
     }
+
+    #google {
+      outline: 1px solid #000;
+      background-color: #fff;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      align-items: center;
+
+      img {
+        height: 30px;
+      }
+    }
   }
 `;
 
@@ -82,7 +97,11 @@ const Login  = ({ setUser, setNotification }) => {
     const password = e.target.password.value
     axios.post('/api/login', { username, password}).then((response) => {
       setUser(response.data);
-      setNotification({ message: "Inicio de sesión exitoso, click aquí para ir a la pagina principal", type: "redirect", url: '/' })
+      setNotification({ message: "Inicio de sesión exitoso", type: "info", url: null })
+      setTimeout(() => {
+        setNotification({ message: null, type: "info", url: null })
+        navigate(-1)
+      }, 3000);
     }).catch((error) => {
       if (error.response.status === 401) {
         setNotification({ message: "Contraseña Incorrecta", type: "info", url: '' })
@@ -91,6 +110,10 @@ const Login  = ({ setUser, setNotification }) => {
         setNotification({ message: "No se encontró el usuario", type: "error", url: '' })
       }
     })
+  }
+
+  const googleLogin = () => {
+    window.open("http://localhost:3001/api/login/google", "_self")
   }
 
   return (
@@ -108,6 +131,7 @@ const Login  = ({ setUser, setNotification }) => {
           <button id="login" type="submit">Iniciar Sesión</ button>
         </form>
         <div className="no-user-container">
+          <button type="button" id="google" onClick={googleLogin}><img src={googleLogo} alt="google" />Continuar con google</ button>
           <p>No tienes usuario?</p>
           <button onClick={ () => navigate('/register') }>Regístrate</ button>
         </div>

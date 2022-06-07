@@ -10,7 +10,7 @@ const NavBarContainer = styled.div`
   display: grid;
   grid-auto-rows: 50px;
   align-content: center;
-  grid-template-columns: 4fr 1fr 1fr 1fr;
+  grid-template-columns: 4fr repeat(3, min(150px, 20%));
   gap: 25px;
   text-align: center;
 

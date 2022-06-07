@@ -177,7 +177,7 @@ const Register = ({ setNotification }) => {
       password: formValues.password
     }
     axios.post('/api/users', user).then((response) => {
-      setNotification({ message: "Usuario registrado con éxito" , type: "redirect", url: '/login' })
+      setNotification({ message: "Usuario registrado con éxito, click ir a inicio de sesión" , type: "redirect", url: '/login' })
     }).catch((exception) => {
       if ( exception.response.data.name === 'ValidationError' ) {
         setNotification({ message: "Ya se ha usado el usuario o email" , type: "error", url: '' })

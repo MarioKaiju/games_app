@@ -11,10 +11,8 @@ const TopGamesContainer = styled.div`
 `;
 
 const Top = ({ user }) => {
-  const [topGames, setTopGames] = useState([]);
+  const [topGames, setTopGames] = useState([])
   
-  console.log(topGames);
-
   useEffect(() => {
     axios.get('/api/games/top').then(response => setTopGames(response.data))
   }, [])

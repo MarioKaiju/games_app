@@ -15,11 +15,11 @@ const Games = ({ games }) => {
       <h3>Lista de juegos:</h3>
       <div>
         {
-          games.map((game) => (
-            <>
+          games.map((game, i) => (
+            <div key={i}>
               <p>Titulo del juego: </p><Link to={`/games/${game.id}`}> {game.title}</Link>
               <p>Fecha de lanzamiento: {getFormattedDate(game.releaseDate)}</p>
-            </>
+            </ div>
           ))
         }
       </div>

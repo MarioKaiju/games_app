@@ -2,7 +2,7 @@ const platformsRouter = require('express').Router()
 const Platform = require('../models/platform')
 
 platformsRouter.get('/', async (request, response) => {
-  const platforms = await Platform.find({}).populate('games', { title: 1, releaseDate: 1 })
+  const platforms = await Platform.find({}, { id: 0, games: 0 }).sort({ name: 1 })
 
   response.json(platforms)
 })

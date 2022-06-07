@@ -20,10 +20,10 @@ const userSchema = new mongoose.Schema({
   passwordHash: String,
   reviews: [
     {
-      game: { type: mongoose.Schema.Types.ObjectId, ref: 'Game', unique: true, index: true },
+      game: { type: mongoose.Schema.Types.ObjectId, ref: 'Game' },
       comment: { type: String},
       score: { type: Number },
-    }
+    },
   ]
 })
 

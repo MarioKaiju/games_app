@@ -30,7 +30,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Template user={user} ><Top /></Template> }/>
         <Route path="/games" element={<Template user={user} ><GamesList user={user} setNotification={setNotification}/></Template>} />
-        <Route path="/games/:id" element={<Template user={user} ><Game /></Template>} />
+        <Route path="/games/:id" element={<Template user={user} ><Game user={user} setNotification={setNotification} /></Template>} />
         <Route path="/publishers" element={<Template user={user}><PublisherList /></Template>} />
         <Route path="/publishers/:name" element={<Template user={user}><Publisher /></Template>} />
         <Route path="/login" element={<Login setNotification={setNotification} setUser={setUser} />} />
