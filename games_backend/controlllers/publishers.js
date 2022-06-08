@@ -2,7 +2,7 @@ const publisherRouter = require('express').Router()
 const Publisher = require('../models/publisher')
 
 publisherRouter.get('/', async (request, response) => {
-  const publishers = await Publisher.find({}).sort({ name: 1 }).populate('games', { title: 1, releaseDate: 1 })
+  const publishers = await Publisher.find({}).sort({ name: 1 })
 
   response.json(publishers)
 })

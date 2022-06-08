@@ -2,6 +2,7 @@ import styled from "styled-components"
 import { useNavigate } from "react-router-dom"
 import axios from "axios";
 import googleLogo from '../images/google.svg'
+import facebookLogo from '../images/facebook.svg'
 
 const ContenedorLogin = styled.div`
   margin: 0;
@@ -12,6 +13,11 @@ const ContenedorLogin = styled.div`
   background-color: #fff;
   box-shadow: 0px 0px 15px 5px hsl(115deg 75% 20%);
   border-radius: 20px;
+
+  @media (max-width: 550px) {
+    width: 70%;
+    padding: 5%;
+  }
 
   button {
     background-color: #ccc;
@@ -42,11 +48,25 @@ const ContenedorLogin = styled.div`
     gap: 30px;
     width: 300px;
     margin: 0 auto;
-    text-align: center
+    text-align: center;
+    @media (max-width: 550px) {
+      width: 100%;
+      gap: 10px;
+    }
   }
 
   p, input {
     font-size: 18px;
+  }
+
+  @media (max-width: 768px) {
+    p, input {
+      font-size: 12px;
+    }
+
+    button {
+      font-size: 12px;
+    }
   }
 
   .no-user-container {
@@ -56,6 +76,11 @@ const ContenedorLogin = styled.div`
     flex-direction: column;
     margin-top: 25px;
     gap: 5px;
+
+    @media (max-width: 550px) {
+      width: 100%;
+      margin-top: 15px;
+    }
 
     p {
       font-size: 12px;
@@ -72,9 +97,7 @@ const ContenedorLogin = styled.div`
       }
     }
 
-    #google {
-      outline: 1px solid #000;
-      background-color: #fff;
+    .social-media {
       display: flex;
       justify-content: center;
       gap: 10px;
@@ -83,6 +106,25 @@ const ContenedorLogin = styled.div`
       img {
         height: 30px;
       }
+
+      @media (max-width: 768px) {
+        gap: 20px;
+        img {
+          height: 15px;
+        }
+      }
+    }
+
+    #google {
+      outline: 1px solid #000;
+      background-color: #fff;
+    }
+
+    #facebook {
+      background-color: #3f51b5;
+      color: #fff;
+      margin-top: 10px;
+      outline: unset;
     }
   }
 `;
@@ -116,6 +158,10 @@ const Login  = ({ setUser, setNotification }) => {
     window.open("http://localhost:3001/api/login/google", "_self")
   }
 
+  const facebookLogin = () => {
+    window.open("http://localhost:3001/api/login/facebook", "_self")
+  }
+
   return (
     <div style={{"backgroundColor": "#1e8c14", "width": "100%", height: "100vh", display: "inline-block"}}>
       <ContenedorLogin>
@@ -131,7 +177,8 @@ const Login  = ({ setUser, setNotification }) => {
           <button id="login" type="submit">Iniciar Sesión</ button>
         </form>
         <div className="no-user-container">
-          <button type="button" id="google" onClick={googleLogin}><img src={googleLogo} alt="google" />Continuar con google</ button>
+          <button className="social-media" type="button" id="google" onClick={googleLogin}><img src={googleLogo} alt="google" />Continuar con google</ button>
+          <button className="social-media" type="button" id="facebook" onClick={facebookLogin}><img src={facebookLogo} alt="facebook" />Continuar con facebook</ button>
           <p>No tienes usuario?</p>
           <button onClick={ () => navigate('/register') }>Regístrate</ button>
         </div>

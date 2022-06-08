@@ -52,7 +52,7 @@ function GamesList({ user, setNotification }) {
   return (
     <GamesContainer>
       <button id="AddGame" onClick={handleClick}>Añadir juego</button>
-      <AddGameForm visible={visible} setVisible={setVisible} setGames={setGames} games={games} />
+      <AddGameForm setNotification={setNotification} visible={visible} setVisible={setVisible} setGames={setGames} games={games} />
       <Cards games={games} />
     </GamesContainer>
   )
