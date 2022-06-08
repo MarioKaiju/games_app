@@ -155,11 +155,11 @@ const Login  = ({ setUser, setNotification }) => {
   }
 
   const googleLogin = () => {
-    window.open("http://localhost:3001/api/login/google", "_self")
+    window.open("https://gamesappfullstack.herokuapp.com/api/login/google", "_self")
   }
 
   const facebookLogin = () => {
-    window.open("http://localhost:3001/api/login/facebook", "_self")
+    window.open("https://gamesappfullstack.herokuapp.com/api/login/facebook", "_self")
   }
 
   return (

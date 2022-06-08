@@ -10,18 +10,19 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Template from "./components/Template";
 import Notification from "./components/Notification";
+import { connect, useDispatch } from "react-redux";
+import { top5 } from "./reducers/gameReducer";
+import { loged } from "./reducers/loginReducer";
 
 
-function App() {
-  const [user, setUser] = useState(null)
+function App (props) {
+  const { user } = props
   const [notification, setNotification] = useState({ message: null, type: "redirect", url: null })
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    axios.get('/api/login/loged').then((response) => {
-      setUser(response.data)
-    }).catch((responseObject) => {
-      return null;
-    })
+    dispatch(top5)
+    dispatch(loged)
   }, []);
 
   return (
@@ -33,11 +34,20 @@ function App() {
         <Route path="/games/:id" element={<Template user={user} ><Game user={user} setNotification={setNotification} /></Template>} />
         <Route path="/publishers" element={<Template user={user}><PublisherList /></Template>} />
         <Route path="/publishers/:name" element={<Template user={user}><Publisher /></Template>} />
-        <Route path="/login" element={<Login setNotification={setNotification} setUser={setUser} />} />
+        <Route path="/login" element={<Login setNotification={setNotification} />} />
         <Route path="/register" element={<Register setNotification={setNotification} user={user} />} />
       </Routes>
     </>
   );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  const user = state.login;
+  return {
+    user
+  }
+}
+
+export default connect(
+  mapStateToProps
+)(App)

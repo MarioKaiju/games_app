@@ -1,5 +1,6 @@
 const loginRouter = require('express').Router()
 const passport = require('passport/lib')
+const config = require('../utils/config')
 
 loginRouter.get('/failed', (request, response) => {
   const error = request.session.messages[0]
@@ -43,14 +44,14 @@ loginRouter.post('/', passport.authenticate('local', { failureRedirect: '/api/lo
 loginRouter.get('/google', passport.authenticate('google', { scope: [ 'email', 'profile' ] }))
 
 loginRouter.get('/google/callback', passport.authenticate("google", {
-  successRedirect: "http://localhost:3000",
+  successRedirect: config.BASE_URL,
   failureRedirect: '/api/login/google/failed'
 }))
 
 loginRouter.get('/facebook', passport.authenticate("facebook", { scope: [ 'email', 'profile' ] }))
 
 loginRouter.get('/facebook/callback', passport.authenticate("facebook", {
-  successRedirect: "http://localhost:3000",
+  successRedirect: config.BASE_URL,
   failureRedirect: '/api/login/facebook/failed'
 }))
 

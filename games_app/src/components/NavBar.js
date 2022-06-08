@@ -143,7 +143,7 @@ const NavBar = ({ user }) => {
   const [open, setOpen] = useState(false)
 
   const handleLogout = () => {
-    window.open("http://localhost:3001/api/logout/", "_self")
+    window.open("https://gamesappfullstack.herokuapp.com/api/logout/", "_self")
   }
 
   if ( isMobile ) {
