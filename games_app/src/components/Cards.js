@@ -20,6 +20,15 @@ const Card = styled.div`
 
   a {
     text-decoration: none;
+    color: #187010;
+    text-decoration: underline 0.15em rgba(0, 0, 0, 0);
+    transition: text-decoration-color 300ms;
+    @media (hover: hover) and (pointer: fine) {
+      :hover {
+        color: #27b71a;
+        text-decoration-color: #27b71a;
+      }
+    }
   }
 
   #game {
@@ -35,7 +44,7 @@ const Card = styled.div`
     background: rgb(255,244,0);
     background: linear-gradient(153deg,rgb(30 140 20) 12%,hsl(115deg 75% 40%) 50%,hsl(115deg 75% 55%) 85%);
     border-radius: 35%;
-    width: 1.75em;
+    width: 2em;
     text-align: center;
     height: 2em;
     line-height: 2em;
@@ -43,6 +52,7 @@ const Card = styled.div`
     justify-self: end;
     font-size: 20px;
   }
+  
   #developer, #publisher {
     grid-area: developer;
     font-size: 12px;
@@ -79,6 +89,18 @@ const Card = styled.div`
       }
     }
   }
+
+  @media (max-width: 768px) {
+    #game {
+      font-size: 15px;
+    }
+
+    #score {
+      font-size: 15px;
+    }
+
+    grid-template-rows: 35px 15px 15px 1fr;
+  }
 `;
 
 const CardsContainer = styled.div`
@@ -86,6 +108,10 @@ const CardsContainer = styled.div`
   grid-template-columns: repeat(auto-fill, max(350px, 30%));
   justify-content: space-between;
   gap: 50px 25px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const Platforms = ({ platforms }) => {
@@ -107,7 +133,7 @@ const Cards = ({ games }) => {
     <CardsContainer >
       { games.map(({title, developer, publisher, releaseDate, platforms, id, score}, i) => (
         <Card key={id}>
-          <Link id="game" to={`/games/${id}`}>{title}<br /></Link>
+          <Link id="game" to={`/games/${id}`}>{title}</Link>
           <span id="score">
             { score ? score : 0}
           </span>

@@ -12,7 +12,6 @@ const publisherSchema = new mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Game',
-      unique: true
     }
   ]
 })

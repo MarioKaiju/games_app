@@ -7,7 +7,7 @@ import Cards from "./Cards";
 const TopGamesContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 25px
+  gap: 25px;
 `;
 
 const Top = ({ user }) => {
@@ -20,7 +20,7 @@ const Top = ({ user }) => {
   if (topGames) {
     return (
       <TopGamesContainer>
-        <h1>Los juegos con mejores reseñas de los usuarios</h1>
+        <h1>Top 5 mejores juegos</h1>
         <Cards games={topGames} />
       </TopGamesContainer>
     );

@@ -6,13 +6,287 @@ import { getFormattedDate } from "../services/service";
 import { Platforms } from "./Platforms";
 
 const GameContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.6);
+  display: grid;
+  grid-template-areas: "title title score" "publisher publisher developer" "platforms platforms platforms" "comments comments comments" ;
+  gap: 20px 10px;
 
-  #commentForm {
-    overflow: hidden;
-    transition: 1s;
+  @media (max-width: 768px) {
+    grid-template-areas: "title title score" "publisher publisher publisher" "developer developer developer" "platforms platforms platforms" "comments comments comments";
+    gap: 15px 10px;
+  }
+
+  h2 {
+    grid-area: title;
+  }
+
+  .label {
+    display: flex;
+    gap: 5px;
+  }
+
+  .publisher {
+    grid-area: publisher;
+    h3 {
+      font-weight: 700;
+      font-size: 20px;
+    }
+
+    p {
+      font-size: 20px;
+    }
+
+    @media (max-width: 768px) {
+      h3, p {
+        font-size: 15px;
+      }
+    }
+  }
+
+  span {
+    color: #fff;
+    background: linear-gradient(153deg,rgb(30 140 20) 12%,hsl(115deg 75% 40%) 50%,hsl(115deg 75% 55%) 85%);
+    border-radius: 35%;
+    width: 2em;
+    align-self: end;
+    text-align: center;
+    height: 2em;
+    line-height: 2em;
+    font-size: 20px;
+
+    @media (max-width: 768px) {
+      font-size: 15px;
+    }
+  }
+
+  .developer {
+    grid-area: developer;
+    justify-self: end;
+    h4 {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    p {
+      font-size: 20px;
+    }
+
+    @media (max-width: 768px) {
+      justify-self: start;
+      p, h4 {
+        font-size: 15px;
+      }
+    }
+  }
+
+  .platforms {
+    grid-area: platforms;
+    display: flex;
+    flex-direction: column;
+    font-size: 15px;
+    gap: 5px;
+
+    ul {
+      padding: 0;
+      list-style: none;
+      margin: 0;
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+      margin-top: 5px;
+
+      li {
+        white-space: nowrap;
+        padding: .2em .5em;
+        border-radius: .7em;
+        background: rgb(255,244,0);
+        background: linear-gradient(153deg,rgb(30 140 20) 12%,hsl(115deg 75% 40%) 50%,hsl(115deg 75% 55%) 85%);
+      }
+    }
+
+    @media (max-width: 768px) {
+      font-size: 12px;
+    }
+  }
+
+  .reviews {
+    grid-area: comments;
+  }
+  
+  .floating {
+    justify-self: end;
+    grid-area: score;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    @media (max-width: 550px) {
+      p {
+        font-size: 10px;
+      }
+    }
+
+  }
+
+  .reviews {
+    #commentForm {
+      overflow: hidden;
+      transition: 0.5s;
+      margin-top: 5px;
+      border-bottom: 2px solid #e0e0e0;
+
+      form {
+        height: 195px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      @media (max-width: 768px) {
+        form {
+          height: 120px;
+        }
+      }
+
+      .inputs-container {
+        display: grid;
+        grid-template-columns: 1fr 150px;
+        gap: 5%;
+
+        @media (max-width: 768px) {
+          grid-template-columns: 1fr 70px;
+        }
+        
+        div {
+          padding: 0 1px;
+          width: 98%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+
+          p {
+            font-size: 20px;
+          }
+
+          textarea {
+            width: 98%;
+            resize: none;
+          }
+
+          @media (max-width: 768px) {
+            p, textarea {
+              font-size: 12px
+            }
+
+            textarea {
+              height: 30px;
+            }
+          }
+        }
+      }
+
+      button {
+        background-color: #59e64c;
+        border: none;
+        font-size: 18px;
+        padding: 0.5em 1em;
+        border-radius: 1em;
+        margin-right: 1px;
+
+        @media (hover: hover) and (pointer: fine) {
+            :hover {
+              background-color: #acf2a6;
+              outline: 1px solid #1e8c18;
+              cursor: pointer;
+            }
+        }
+
+        @media (max-width: 768px) {
+          font-size : 15px;
+        }
+        
+      }
+    }
+
+    .reviews-list {
+      margin-top: 50px;
+      max-height: 500px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+
+      .paragraph {
+        font-size: 20px;
+      }
+
+      @media (max-width: 768px) {
+        margin-top: 25px;
+        p, .paragraph {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+`;
+
+const ButtonOpenCommentForm = styled.button`
+  color: #187010;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+
+  ::after {
+    font-size: 25px;
+    margin-top: -0.18em;
+    font-weight: 400;
+    content: '>';
+    transform: ${props => props.open ? "rotate(-90deg)" : "rotate(90deg)" };
+    transition: transform 0.5s ease-out;
+    margin-left: 0.5em;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+
+    ::after {
+      font-size: 15px;
+    }
+  }
+`;
+
+const ReviewContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-bottom: 2px solid #1e8c14;
+
+  div {
+    display: grid;
+    grid-template-columns: 1fr 40px;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+
+  .user {
+    font-weight: 700;
+    font-size: 22px;
+  }
+
+  .comment {
+    color: #444;
+    font-size: 15px;
+  }
+
+  span {
+    align-self: flex-start;
+  }
+
+  @media (max-width: 550px) {
+    gap: 5px;
   }
 `;
 
@@ -33,11 +307,19 @@ const CommentForm = ({ id, setGame, setNotification }) => {
 
   return (
     <form onSubmit={addReview}>
-      <p>Comentario</p>
-      <textarea cols={50} rows={3} value={comment} onChange={(e) => setComment(e.target.value)} />
-      <p>Puntuación</p>
-      <input type="number" max={10} value={score} onChange={(e) => setScore(e.target.value)} />
-      <button type="submit">Enviar reseña</button>
+      <div className="inputs-container">
+        <div>
+          <p>Comentario</p>
+          <textarea rows={3} value={comment} onChange={(e) => setComment(e.target.value)} />
+        </div>
+        <div>
+          <p>Puntuación</p>
+          <input type="number" max={10} value={score} onChange={(e) => setScore(e.target.value)} />
+        </div>
+      </div>
+      <div style={{ display: "flex", justifyContent: "end" }}>
+        <button type="submit">Enviar reseña</button>
+      </div>
     </form>
   )
 }
@@ -45,17 +327,19 @@ const CommentForm = ({ id, setGame, setNotification }) => {
 const Reviews = ({reviews}) => {
   if ( reviews.length > 0) {
     return (
-      <div>
+      <>
         {
           reviews.map((review, i) => (
-            <div key={i}>
-              {review.comment}
-              {review.score}
-              {review.user.username}
-            </div>
+            <ReviewContainer key={i}>
+              <p className="user">{review.user.username}</p>
+              <div>
+                <p className="comment">{review.comment}</p>
+                <span>{review.score}</span>
+              </div>
+            </ReviewContainer>
           ))
         }
-      </div>
+      </>
     )
   }
 
@@ -85,21 +369,29 @@ const Game = ({ user, setNotification }) => {
   if (game) {
     return (
     <GameContainer>
-      <div>
-        <h2>{game.title}</h2>
-        <h3>Publicado por: {game.publisher.name}</h3>
-        <h4>Desarrollador: {game.developer}</h4>
-        <div>Plataformas disponibles<Platforms platforms={game.platforms} /></div>
-        <button onClick={handleOpenCommentForm}>Agregar reseña</button>
+      <h2>{game.title}</h2>
+      <div className="label publisher">
+        <h3>Publicado por:</h3><p>{ game.publisher.name }</p>
+      </div>
+      <div className="label developer">
+        <h4>Desarrollador:</h4><p>{ game.developer }</p>
+      </div>
+      <div className="platforms">Plataformas disponibles<Platforms platforms={game.platforms} /></div>
+      <div className="reviews">
+        <ButtonOpenCommentForm onClick={handleOpenCommentForm} open={open} id="openCommentForm">Agregar reseña</ButtonOpenCommentForm>
         <div id="commentForm" style={ open? { height: "200px" } : { height: "0" } }>
           <CommentForm id={id} setGame={setGame}  setNotification={setNotification} />
         </div>
-        <p>Reseñas de los usuarios: </p>
-        <Reviews reviews={game.reviews}/>
+        <div className="reviews-list">
+          <p className="paragraph" style= {{borderBottom: "2px solid #1e8c14", paddingBottom: "5px" }}>Reseñas de los usuarios: </p>
+          <Reviews reviews={game.reviews}/>
+        </div>
       </div>
-      <div>
-        <p>Fecha de lanzamiento: {getFormattedDate(game.releaseDate)}</p>
-        <div>Puntuacion de los usuarios: {game.score}</div>
+      <div className="floating">
+        <span id="score">
+            { game.score ? game.score : 0}
+        </span>
+        <p>Salida: {getFormattedDate(game.releaseDate)}</p>
       </div>
     </GameContainer>
     )

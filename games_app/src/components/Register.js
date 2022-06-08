@@ -11,6 +11,11 @@ const ContenedorRegister = styled.div`
   background-color: #fff;
   box-shadow: 0px 0px 15px 5px hsl(115deg 75% 20%);
   border-radius: 20px;
+
+  @media (max-width: 768px) {
+    margin: 50px auto 0;
+    padding: 5%;
+  }
   
   form {
     display: flex;
@@ -38,6 +43,12 @@ const ContenedorRegister = styled.div`
         cursor: pointer;
       }
     }
+
+    @media (max-width: 768px) {
+      margin-top: 10px;
+      font-size: 12px;
+      width: 100px;
+    }
   }
 
   #input-container div {
@@ -53,6 +64,15 @@ const ContenedorRegister = styled.div`
     width: 100%;
     margin: 0 auto;
     text-align: left;
+
+    @media (max-width: 768px) {
+      gap: 20px;
+    }
+
+    @media (max-width: 550px) {
+      grid-template-columns: 1fr;
+    }
+
     p {
       margin-left: 0.5em;
     }
@@ -62,6 +82,10 @@ const ContenedorRegister = styled.div`
       font-size: 14px;
       position: absolute;
       top: calc(100% + 5px);
+      @media (max-width: 768px) {
+        font-size: 10px;
+        top: calc(100% + 2px);
+      }
     }
   }
 `;
