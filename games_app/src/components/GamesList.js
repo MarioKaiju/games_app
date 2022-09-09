@@ -2,11 +2,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Cards from "./Cards";
 import styled from 'styled-components';
-import AddGameForm from "./AddGame";
+import AddGameForm from "./AddGameForm";
 
 const GamesContainer = styled.div`
   position: relative;
-  margin-top: 125px;
+  padding-top: 75px;
 
   #AddGame {
     background-color: #59e64c;
@@ -52,7 +52,7 @@ function GamesList({ user, setNotification }) {
   return (
     <GamesContainer>
       <button id="AddGame" onClick={handleClick}>Añadir juego</button>
-      <AddGameForm visible={visible} setVisible={setVisible} />
+      <AddGameForm setNotification={setNotification} visible={visible} setVisible={setVisible} setGames={setGames} games={games} />
       <Cards games={games} />
     </GamesContainer>
   )

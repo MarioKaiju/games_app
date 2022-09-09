@@ -27,11 +27,14 @@ gamesRouter.get('/top', async (request, response) => {
 })
 
 //Obtener uno solo en base al id
-gamesRouter.get('/:id', async (request, response) => {
+gamesRouter.get('/:id', async (request, response, next) => {
   const id = request.params.id
-  const game = await Game.findById(id).populate('publisher', { name: 1 }).populate('platforms', { name: 1 })
-
-  response.json(game)
+  try {
+    const game = await Game.findById(id).populate('publisher', { name: 1 }).populate('platforms', { name: 1 }).populate('reviews.user', { username: 1 })
+    return response.json(game)
+  } catch (exception) {
+    next(exception)
+  }
 })
 
 // Agregar un juego a la lista
@@ -42,32 +45,30 @@ gamesRouter.post('/', async (request, response) => {
   if (!user) {
     return response.status(401).json({ error: 'Log in to post a game' })
   }
+  
+  const platforms = await Platform.find({ name: { $in : body.platforms } }, { id: 1 })
 
-  let publisher = await Publisher.findOne({ name: body.publisher })
+  const publisher = await Publisher.findOne({ name: body.publisher })
 
-  if ( !publisher ) {
-    publisher = new Publisher({
-      name: body.publisher
-    })
+  if (!publisher) {
+    const newPublisher = new Publisher({ name: body.publisher })
+    await newPublisher.save()
   }
-
-  let platforms = await Platform.find({ name: { $in : body.platforms } }, { id: 1 })
-
+  
   const game = new Game({
     title: body.title,
     developer: body.developer,
-    publisher: publisher._id,
+    publisher: publisher ? publisher._id : newPublisher._id,
     releaseDate: new Date(body.releaseDate),
     platforms: platforms.map((platform) => { return (platform.id) })
   })
-
-  publisher.games = publisher.games.concat(game._id)
-
-  game.save()
-  publisher.save()
+  
+  await Publisher.findOneAndUpdate({ name: body.publisher }, { $push: { games: game._id } })
+  await game.save()
   await Platform.updateMany({ name: { $in: body.platforms }}, { $push: { games: game._id} }).catch((error) => console.log("No fue posible agregar"))
 
-  response.json(game)
+  const savedGame = await Game.findById(game._id).populate('publisher', { name: 1 }).populate('platforms', { name: 1 })
+  response.json(savedGame)
 })
 
 // calificar un juego
@@ -94,18 +95,21 @@ gamesRouter.post('/comment/:id', async (request, response) => {
       $set: { score: newScore }
     }, { new: true })
 
-  if ( savedGame ) {
-    const savedUser = await User.findOneAndUpdate({
-      _id: user.id,
-      'revies.game': { $ne: savedGame._id }
-    }, {
-      $push: { reviews: { game: savedGame.id, comment, score } }
-    }, { new: true })
     
-    return response.json({ game: savedGame, savedUser })
-  }
-  
-  return response.json({ error: "Already commented this game" })
+    if ( savedGame ) {
+      const savedUser = await User.findOneAndUpdate({
+        _id: user.id,
+        'revies.game': { $ne: savedGame._id }
+      }, {
+        $push: { reviews: { game: savedGame.id, comment, score } }
+      }, { new: true })
+      
+      const game = await Game.findById(id).populate('publisher', { name: 1 }).populate('platforms', { name: 1 }).populate('reviews.user', { username: 1 })
+      
+      return response.json({ game: game, savedUser })
+    }
+    
+    return response.status(400).json({ error: "Already commented this game" })
 })
 
 module.exports = gamesRouter

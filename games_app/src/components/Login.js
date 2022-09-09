@@ -1,17 +1,32 @@
 import styled from "styled-components"
 import { useNavigate } from "react-router-dom"
 import axios from "axios";
+import googleLogo from '../images/google.svg'
+import facebookLogo from '../images/facebook.svg'
+
+const Background = styled.div`
+  background-color: #1e8c14;
+  width: 100%;
+  height: 100vh;
+  display: inline-block;
+`;
+
 const ContenedorLogin = styled.div`
   margin: 0;
   border: none;
   padding: 50px 0;
   width: 400px;
-  margin: 100px auto 0;
+  margin: 50px auto 0;
   background-color: #fff;
   box-shadow: 0px 0px 15px 5px hsl(115deg 75% 20%);
   border-radius: 20px;
 
-  button {
+  @media (max-width: 550px) {
+    width: 70%;
+    padding: 25px;
+  }
+
+  button, a {
     background-color: #ccc;
     border: none;
     font-size: 18px;
@@ -40,11 +55,25 @@ const ContenedorLogin = styled.div`
     gap: 30px;
     width: 300px;
     margin: 0 auto;
-    text-align: center
+    text-align: center;
+    @media (max-width: 550px) {
+      width: 100%;
+      gap: 10px;
+    }
   }
 
   p, input {
     font-size: 18px;
+  }
+
+  @media (max-width: 768px) {
+    p, input {
+      font-size: 12px;
+    }
+
+    button, a {
+      font-size: 12px;
+    }
   }
 
   .no-user-container {
@@ -54,6 +83,11 @@ const ContenedorLogin = styled.div`
     flex-direction: column;
     margin-top: 25px;
     gap: 5px;
+
+    @media (max-width: 550px) {
+      width: 100%;
+      margin-top: 15px;
+    }
 
     p {
       font-size: 12px;
@@ -69,6 +103,38 @@ const ContenedorLogin = styled.div`
         }
       }
     }
+
+    .social-media {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      align-items: center;
+      text-decoration: none;
+      color: #000;
+
+      img {
+        height: 30px;
+      }
+
+      @media (max-width: 768px) {
+        gap: 20px;
+        img {
+          height: 15px;
+        }
+      }
+    }
+
+    #google {
+      outline: 1px solid #000;
+      background-color: #fff;
+    }
+
+    #facebook {
+      background-color: #3f51b5;
+      color: #fff;
+      margin-top: 10px;
+      outline: unset;
+    }
   }
 `;
 
@@ -82,8 +148,13 @@ const Login  = ({ setUser, setNotification }) => {
     const password = e.target.password.value
     axios.post('/api/login', { username, password}).then((response) => {
       setUser(response.data);
-      setNotification({ message: "Inicio de sesión exitoso, click aquí para ir a la pagina principal", type: "redirect", url: '/' })
+      setNotification({ message: "Inicio de sesión exitoso", type: "info", url: null })
+      setTimeout(() => {
+        setNotification({ message: null, type: "info", url: null })
+        navigate(-1)
+      }, 3000);
     }).catch((error) => {
+      console.log(error)
       if (error.response.status === 401) {
         setNotification({ message: "Contraseña Incorrecta", type: "info", url: '' })
       }
@@ -93,8 +164,12 @@ const Login  = ({ setUser, setNotification }) => {
     })
   }
 
+  const facebookLogin = () => {
+    window.open("https://gamesappfullstack.herokuapp.com/api/login/facebook", "_self")
+  }
+
   return (
-    <div style={{"backgroundColor": "#1e8c14", "width": "100%", height: "100vh", display: "inline-block"}}>
+    <Background >
       <ContenedorLogin>
         <form onSubmit={login}>
           <div>
@@ -108,11 +183,13 @@ const Login  = ({ setUser, setNotification }) => {
           <button id="login" type="submit">Iniciar Sesión</ button>
         </form>
         <div className="no-user-container">
+          <a href="http://localhost:3001/api/login/google" className="social-media" id="google" ><img src={googleLogo} alt="google" />Continuar con google</ a>
+          <a href="http://localhost:3001/api/login/facebook" className="social-media" id="facebook" ><img src={facebookLogo} alt="facebook" />Continuar con facebook</ a>
           <p>No tienes usuario?</p>
           <button onClick={ () => navigate('/register') }>Regístrate</ button>
         </div>
       </ContenedorLogin>
-    </div>
+    </Background>
   )
 }
 
