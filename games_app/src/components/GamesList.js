@@ -6,7 +6,7 @@ import AddGameForm from "./AddGameForm";
 
 const GamesContainer = styled.div`
   position: relative;
-  margin-top: 125px;
+  padding-top: 75px;
 
   #AddGame {
     background-color: #59e64c;

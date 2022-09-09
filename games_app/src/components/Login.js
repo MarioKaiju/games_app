@@ -4,22 +4,29 @@ import axios from "axios";
 import googleLogo from '../images/google.svg'
 import facebookLogo from '../images/facebook.svg'
 
+const Background = styled.div`
+  background-color: #1e8c14;
+  width: 100%;
+  height: 100vh;
+  display: inline-block;
+`;
+
 const ContenedorLogin = styled.div`
   margin: 0;
   border: none;
   padding: 50px 0;
   width: 400px;
-  margin: 100px auto 0;
+  margin: 50px auto 0;
   background-color: #fff;
   box-shadow: 0px 0px 15px 5px hsl(115deg 75% 20%);
   border-radius: 20px;
 
   @media (max-width: 550px) {
     width: 70%;
-    padding: 5%;
+    padding: 25px;
   }
 
-  button {
+  button, a {
     background-color: #ccc;
     border: none;
     font-size: 18px;
@@ -64,7 +71,7 @@ const ContenedorLogin = styled.div`
       font-size: 12px;
     }
 
-    button {
+    button, a {
       font-size: 12px;
     }
   }
@@ -102,6 +109,8 @@ const ContenedorLogin = styled.div`
       justify-content: center;
       gap: 10px;
       align-items: center;
+      text-decoration: none;
+      color: #000;
 
       img {
         height: 30px;
@@ -145,6 +154,7 @@ const Login  = ({ setUser, setNotification }) => {
         navigate(-1)
       }, 3000);
     }).catch((error) => {
+      console.log(error)
       if (error.response.status === 401) {
         setNotification({ message: "Contraseña Incorrecta", type: "info", url: '' })
       }
@@ -154,16 +164,12 @@ const Login  = ({ setUser, setNotification }) => {
     })
   }
 
-  const googleLogin = () => {
-    window.open("https://gamesappfullstack.herokuapp.com/api/login/google", "_self")
-  }
-
   const facebookLogin = () => {
     window.open("https://gamesappfullstack.herokuapp.com/api/login/facebook", "_self")
   }
 
   return (
-    <div style={{"backgroundColor": "#1e8c14", "width": "100%", height: "100vh", display: "inline-block"}}>
+    <Background >
       <ContenedorLogin>
         <form onSubmit={login}>
           <div>
@@ -177,13 +183,13 @@ const Login  = ({ setUser, setNotification }) => {
           <button id="login" type="submit">Iniciar Sesión</ button>
         </form>
         <div className="no-user-container">
-          <button className="social-media" type="button" id="google" onClick={googleLogin}><img src={googleLogo} alt="google" />Continuar con google</ button>
-          <button className="social-media" type="button" id="facebook" onClick={facebookLogin}><img src={facebookLogo} alt="facebook" />Continuar con facebook</ button>
+          <a href="http://localhost:3001/api/login/google" className="social-media" id="google" ><img src={googleLogo} alt="google" />Continuar con google</ a>
+          <a href="http://localhost:3001/api/login/facebook" className="social-media" id="facebook" ><img src={facebookLogo} alt="facebook" />Continuar con facebook</ a>
           <p>No tienes usuario?</p>
           <button onClick={ () => navigate('/register') }>Regístrate</ button>
         </div>
       </ContenedorLogin>
-    </div>
+    </Background>
   )
 }
 

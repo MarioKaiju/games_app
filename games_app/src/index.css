@@ -3,6 +3,11 @@ body {
   font-family: 'Poppins', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+html {
+  overflow-x: hidden;
 }
 
 button, textarea {
@@ -143,5 +148,9 @@ input:focus, textarea:focus {
 
   h4 {
     font-size: 15px;
+  }
+
+  .notification p, .notification a, .notification button {
+    font-size: 12px;
   }
 }

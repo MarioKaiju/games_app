@@ -2,7 +2,7 @@ import NavBar from "./NavBar";
 import styled from "styled-components"
 
 const Container = styled.div`
-  margin: 50px 5%;
+  margin: 125px 5%;
 `;
 
 const Template = ({ user, children }) => {

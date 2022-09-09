@@ -93,13 +93,14 @@ const Card = styled.div`
   @media (max-width: 768px) {
     #game {
       font-size: 15px;
+      line-height: 1.2;
     }
 
     #score {
       font-size: 15px;
     }
 
-    grid-template-rows: 35px 15px 15px 1fr;
+    grid-template-rows: 38px 15px 15px 1fr;
   }
 `;
 

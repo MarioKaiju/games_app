@@ -5,6 +5,9 @@ import styled from "styled-components"
 import logo from '../images/Logo.svg'
 
 const NavBarContainer = styled.div`
+  z-index: 50;
+  top: 0;
+  position: fixed;
   width: 90%;
   height: 75px;
   background-color: #1e8c14;
@@ -15,6 +18,7 @@ const NavBarContainer = styled.div`
   grid-template-columns: 4fr repeat(3, min(150px, 20%));
   gap: 25px;
   text-align: center;
+  overflow-x: hidden;
 
   a:not(#logo), button, p {
     background-color: transparent;
@@ -71,7 +75,7 @@ const NavBarContainer = styled.div`
 `;
 
 const UserMenu = styled.div`
-  position: absolute;
+  position: fixed;
   top: calc(100%);
   height: ${ props => props.open ? "62.5px" : 0 };
   width: 100%;
@@ -120,7 +124,7 @@ const Menu = styled.button`
 const MenuBar = styled.div`
   z-index: 100;
   background-color: #1e8c18;
-  position: absolute;
+  position: fixed;
   width: 200px;
   height: 100vh;
   top: 0;
