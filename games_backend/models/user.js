@@ -18,6 +18,7 @@ const userSchema = new mongoose.Schema({
   firstName: { type: String, required: true },
   lastName : { type: String, required: true },
   passwordHash: String,
+  provider: [ { type: String } ],
   reviews: [
     {
       game: { type: mongoose.Schema.Types.ObjectId, ref: 'Game' },

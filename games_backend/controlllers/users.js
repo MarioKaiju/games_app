@@ -22,7 +22,8 @@ usersRouter.post('/', async (request, response, next) => {
       email,
       firstName,
       lastName,
-      passwordHash
+      passwordHash,
+      provider: "local"
     })
 
     const savedUser = await user.save()

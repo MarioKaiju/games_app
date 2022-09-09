@@ -18,7 +18,7 @@ loginRouter.get('/google/failed', (request, response) => {
 })
 
 loginRouter.get('/facebook/failed', (request, response) => {
-  response.status(401).json({ success: false, error: "Could not access with google" })
+  response.status(401).json({ success: false, error: "Could not access with facebook" })
 })
 
 
@@ -48,9 +48,9 @@ loginRouter.get('/google/callback', passport.authenticate("google", {
   failureRedirect: '/api/login/google/failed'
 }))
 
-loginRouter.get('/facebook', passport.authenticate("facebook", { scope: [ 'email', 'profile' ] }))
+loginRouter.get('/facebook', passport.authenticate('facebook', { scope: [ 'email' ] }))
 
-loginRouter.get('/facebook/callback', passport.authenticate("facebook", {
+loginRouter.get('/facebook/callback', passport.authenticate('facebook', {
   successRedirect: config.BASE_URL,
   failureRedirect: '/api/login/facebook/failed'
 }))
